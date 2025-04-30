@@ -1,5 +1,5 @@
 
-import { Role } from '@/constants/type'
+import { Role } from 'src/constants/type'
 import z from 'zod'
 
 export const AccountSchema = z.object({

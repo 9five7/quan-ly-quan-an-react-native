@@ -1,4 +1,5 @@
-import { DishSchema } from '@/schemaValidations/dish.schema'
+
+import { DishSchema } from 'src/schemaValidations/dish.schema'
 import z from 'zod'
 
 export const DashboardIndicatorQueryParams = z.object({

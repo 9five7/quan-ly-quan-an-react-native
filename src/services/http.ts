@@ -26,12 +26,6 @@ export class HttpError extends Error {
 }
 
 export class EntityError extends HttpError {
-  declare status: typeof ENTITY_ERROR_STATUS;
-  declare payload: {
-    message: string;
-    errors: { field: string; message: string }[];
-  };
-
   constructor({
     status,
     payload,
@@ -67,7 +61,7 @@ const request = async <Response>(
     headers.Authorization = `Bearer ${accessToken}`;
   }
 
-  const baseUrl = options?.baseUrl ?? "http://localhost:4000";
+  const baseUrl = options?.baseUrl ?? "https://api-bigboy.duthanhduoc.com";
   const fullUrl = `${baseUrl}/${normalizePath(url)}`;
 
   const res = await fetch(fullUrl, {
