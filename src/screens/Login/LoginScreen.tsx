@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import LoginForm from 'src/components/LoginForm';
+import LoginForm from 'src/components/Login/LoginForm';
 import tw from 'src/utils/tw';
 
 

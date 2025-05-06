@@ -4,8 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import { PrivateStackParamList } from "src/navigation/PrivateStack";
 
-import { RootStackParamList } from "src/navigation";
 import { useLoginMutation } from "src/queries/useAccount";
 import { LoginBody, LoginBodyType } from "src/schemaValidations/auth.schema";
 import tw from "src/utils/tw";
@@ -24,7 +24,7 @@ export default function LoginForm() {
   });
 
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<NativeStackNavigationProp<PrivateStackParamList>>();
   const { mutate, isPending } = useLoginMutation();
 
   const onSubmit = (data: LoginBodyType) => {

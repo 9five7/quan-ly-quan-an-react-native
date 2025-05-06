@@ -1,44 +1,37 @@
-// src/components/NavLinks.tsx
 import { View, Pressable, Text } from 'react-native';
-import { useNavigation, useNavigationState } from '@react-navigation/native';
-import { Package2, Settings } from 'lucide-react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect, useState } from 'react';
 import tw from 'src/utils/tw';
+import { sharedMenuItems } from 'src/constants/menuItems';
 
-export default function NavLinks() {
+
+export default function NavLinks({ className }: { className?: string }) {
   const navigation = useNavigation();
-  const routes = useNavigationState(state => state.routes);
-  const currentRouteName = routes[routes.length - 1]?.name;
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    const check = async () => {
+      const token = await AsyncStorage.getItem('accessToken');
+      setIsAuth(!!token);
+    };
+    check();
+  }, []);
 
   return (
-    <View style={tw`h-full w-16 bg-gray-50 border-r items-center pt-4`}> 
-      <Pressable
-        style={tw`h-12 w-12 rounded-full bg-blue-500 items-center justify-center mb-6`}
-        onPress={() => navigation.navigate('Home')}
-      >
-        <Package2 size={24} color="white" />
-      </Pressable>
-
-      {menuItems.map((Item, index) => {
-        const isActive = currentRouteName === Item.href;
+    <View style={tw`${className || ''}`}> 
+      {sharedMenuItems.map((item, i) => {
+        if ((item.authRequired === true && !isAuth) || (item.authRequired === false && isAuth)) return null;
         return (
           <Pressable
-            key={index}
-            style={tw`${isActive ? 'bg-blue-100' : ''} h-12 w-12 rounded-lg items-center justify-center mb-4`}
-            onPress={() => navigation.navigate(Item.href)}
+            key={i}
+            style={tw`py-2`}
+            onPress={() => navigation.navigate(item.href as never)}
           >
-            <Item.Icon size={20} color={isActive ? '#2563EB' : '#9CA3AF'} />
+            <Text style={tw`text-lg font-medium text-blue-500`}>{item.title}</Text>
           </Pressable>
         );
       })}
-
-      <View style={tw`mt-auto mb-6`}>
-        <Pressable
-          style={tw`${currentRouteName === 'Setting' ? 'bg-blue-100' : ''} h-12 w-12 rounded-lg items-center justify-center`}
-          onPress={() => navigation.navigate('Setting')}
-        >
-          <Settings size={20} color={currentRouteName === 'Setting' ? '#2563EB' : '#9CA3AF'} />
-        </Pressable>
-      </View>
     </View>
   );
 }
