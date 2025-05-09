@@ -3,35 +3,36 @@
 import { GetGuestListQueryParamsType, UpdateEmployeeAccountBodyType } from 'src/schemaValidations/account.schema'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import authApiRequest from 'src/apiRequests/auth'
+import accountApiRequest from 'src/apiRequests/account'
 
 export const useLoginMutation = () => {
   return useMutation({
     mutationFn: authApiRequest.login
   })
 }
-// export const useAccountQuery = () => {
-//   return useQuery({
-//     queryKey: ['account', 'me'],
-//     queryFn: accountApiRequest.me
-//   })
-// }
+export const useAccountQuery = () => {
+  return useQuery({
+    queryKey: ['account', 'me'],
+    queryFn: accountApiRequest.me
+  })
+}
 
-// export const useUpdateMeMutation = () => {
-//   return useMutation({
-//     mutationFn: accountApiRequest.updateMe
-//   })
-// }
+export const useUpdateMeMutation = () => {
+  return useMutation({
+    mutationFn: accountApiRequest.updateMe
+  })
+}
 
 // export const useChangePasswordMutation = () => {
 //   return useMutation({
 //     mutationFn: accountApiRequest.changePassword
 //   })
 // }
-// export const useLogoutMutation = () => {
-//   return useMutation({
-//     mutationFn: authApiRequest.logout
-//   })
-// }
+export const useLogoutMutation = () => {
+  return useMutation({
+    mutationFn: authApiRequest.logout
+  })
+}
 // export const useAccountListQuery = () => {
 //   return useQuery({
 //     queryKey: ['accounts'],

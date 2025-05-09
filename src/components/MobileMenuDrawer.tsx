@@ -5,12 +5,14 @@ import { PanelLeft, X } from 'lucide-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from 'src/contexts/AuthContext';
 import tw from 'src/utils/tw';
-import { sharedMenuItems } from 'src/constants/menuItems';
+import { menuItems, sharedMenuItems } from 'src/constants/menuItems';
+import { PrivateStackParamList } from 'src/navigation/PrivateStack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 
 export default function MobileMenuDrawer() {
   const [open, setOpen] = useState(false);
-  const navigation = useNavigation();
+ const navigation =useNavigation<NativeStackNavigationProp<PrivateStackParamList>>();
   const { isAuth } = useAuth();
 
   const close = () => setOpen(false);
@@ -36,12 +38,13 @@ export default function MobileMenuDrawer() {
               </Pressable>
             </View>
 
-            {sharedMenuItems.map((item, index) => {
-              if ((item.authRequired === true && !isAuth) || (item.authRequired === false && isAuth)) return null;
+            {menuItems.map((item, index) => {
+              if ((item.authRequired === true && !isAuth) || (item.authRequired === false && isAuth)) return null;//
+              // không hiển thị menu nếu không có quyền truy cập
               return (
                 <Pressable
                   key={index}
-                  onPress={() => handleNavigate(item.href)}
+                  onPress={() => navigation.navigate(item.href as never)}
                   style={tw`mb-4 flex-row items-center`}
                 >
                   <item.Icon size={20} color="white" />

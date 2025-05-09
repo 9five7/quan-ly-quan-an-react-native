@@ -1,9 +1,11 @@
 // src/components/LoginForm.tsx
 import { zodResolver } from "@hookform/resolvers/zod";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Controller, useForm } from "react-hook-form";
 import { Alert, Pressable, Text, TextInput, View } from "react-native";
+import { useAuth } from "src/contexts/AuthContext";
 import { PrivateStackParamList } from "src/navigation/PrivateStack";
 
 import { useLoginMutation } from "src/queries/useAccount";
@@ -11,6 +13,7 @@ import { LoginBody, LoginBodyType } from "src/schemaValidations/auth.schema";
 import tw from "src/utils/tw";
 
 export default function LoginForm() {
+  const { login } = useAuth();
   const {
     control,
     handleSubmit,
@@ -29,9 +32,13 @@ export default function LoginForm() {
 
   const onSubmit = (data: LoginBodyType) => {
     mutate(data, {
-      onSuccess: () => {
+      onSuccess: async (res) => {
+        const { accessToken, refreshToken } = res.payload.data;
+        await AsyncStorage.setItem("accessToken", accessToken);
+        await AsyncStorage.setItem("refreshToken", refreshToken);
+        login();
         Alert.alert("Đăng nhập thành công");
-        navigation.navigate("Home");
+        navigation.navigate("Dashboard");
       },
       onError: (error: any) => {
         console.log("Login error:", error); // <- THÊM DÒNG NÀY

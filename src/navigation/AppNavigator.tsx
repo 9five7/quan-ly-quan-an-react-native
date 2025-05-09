@@ -40,9 +40,8 @@ import PrivateStack from "src/navigation/PrivateStack";
 import PublicStack from "src/navigation/PublicStack";
 
 export default function AppNavigator() {
-  const { isAuth, loading } = useAuth();
+  const { isAuth} = useAuth();
 
-  if (loading) return null; // hoặc SplashScreen
 
   return isAuth ? <PrivateStack /> : <PublicStack />;
 }
