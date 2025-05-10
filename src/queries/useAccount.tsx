@@ -23,11 +23,11 @@ export const useUpdateMeMutation = () => {
   })
 }
 
-// export const useChangePasswordMutation = () => {
-//   return useMutation({
-//     mutationFn: accountApiRequest.changePassword
-//   })
-// }
+export const useChangePasswordMutation = () => {
+  return useMutation({
+    mutationFn: accountApiRequest.changePassword
+  })
+}
 export const useLogoutMutation = () => {
   return useMutation({
     mutationFn: authApiRequest.logout
