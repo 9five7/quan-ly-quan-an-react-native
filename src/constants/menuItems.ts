@@ -48,7 +48,9 @@
 // ];
 import {
   Home,
+  LayoutDashboard,
   LineChart,
+  LogInIcon,
   Package2,
   Salad,
   ShoppingCart,
@@ -65,8 +67,8 @@ export const sharedMenuItems = [
   },
 
   {
-    title: "Dashboard",
-    Icon: Package2,
+    title: "Quản lý",
+    Icon: LayoutDashboard,
     href: "Dashboard",
     authRequired: true,
   },
@@ -110,13 +112,13 @@ export const menuItems = [
   
   {
     title: 'Đăng nhập',
-    Icon: ShoppingCart,
+    Icon: LogInIcon,
     href: 'Login',
     authRequired: false,
   },
   {
     title: 'Quản lý',
-    Icon: Package2,
+    Icon: LayoutDashboard,
     href: 'Dashboard',
     authRequired: true,
   }

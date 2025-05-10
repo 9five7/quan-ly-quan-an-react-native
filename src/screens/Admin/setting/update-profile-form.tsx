@@ -1,19 +1,21 @@
 // src/screens/Setting/UpdateProfileForm.tsx
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as ImagePicker from 'expo-image-picker';
-import { Controller, useForm } from 'react-hook-form';
-import { Alert, Image, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { UpdateMeBody, UpdateMeBodyType } from 'src/schemaValidations/account.schema';
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as ImagePicker from "expo-image-picker";
+import { Controller, useForm } from "react-hook-form";
+import { Alert, Image, Pressable, Text, TextInput, View } from "react-native";
+import {
+  UpdateMeBody,
+  UpdateMeBodyType,
+} from "src/schemaValidations/account.schema";
 
-import { useEffect, useMemo, useState } from 'react';
-import { useToast } from 'src/components/ui/use-toast';
-import { useAccountQuery, useUpdateMeMutation } from 'src/queries/useAccount';
-import tw from 'src/utils/tw';
-import { useUploadImageMutation } from 'src/queries/useMedia';
-import { Button } from 'src/components/Button';
+import { useEffect, useState } from "react";
+import { Button } from "src/components/Button";
+import { useAccountQuery, useUpdateMeMutation } from "src/queries/useAccount";
+import { useUploadImageMutation } from "src/queries/useMedia";
+import tw from "src/utils/tw";
 
 export default function UpdateProfileForm() {
-     const [imageUri, setImageUri] = useState<string | null>(null);
+  const [imageUri, setImageUri] = useState<string | null>(null);
   const { data, refetch } = useAccountQuery();
   const uploadImageMutation = useUploadImageMutation();
   const updateMeMutation = useUpdateMeMutation();
@@ -23,10 +25,10 @@ export default function UpdateProfileForm() {
     handleSubmit,
     reset,
     watch,
-    formState: { errors }
+    formState: { errors },
   } = useForm<UpdateMeBodyType>({
     resolver: zodResolver(UpdateMeBody),
-    defaultValues: { name: "", avatar: undefined }
+    defaultValues: { name: "", avatar: undefined },
   });
 
   const avatar = watch("avatar");
@@ -83,7 +85,7 @@ export default function UpdateProfileForm() {
             resizeMode="cover"
           />
         ) : null}
-        <Button  onPress={onSelectImage} >Chọn ảnh</Button>
+        <Button onPress={onSelectImage}>Chọn ảnh</Button>
       </View>
 
       <Controller
@@ -97,7 +99,11 @@ export default function UpdateProfileForm() {
               onChangeText={onChange}
               value={value}
             />
-            {errors.name && <Text style={tw`text-red-500 text-xs`}>{errors.name.message}</Text>}
+            {errors.name && (
+              <Text style={tw`text-red-500 text-xs`}>
+                {errors.name.message}
+              </Text>
+            )}
           </View>
         )}
       />

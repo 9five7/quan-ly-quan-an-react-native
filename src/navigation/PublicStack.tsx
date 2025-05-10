@@ -12,35 +12,35 @@ export type PublicStackParamList = {
 };
 
 const Stack = createNativeStackNavigator<PublicStackParamList>();
+const HomeScreenWrapper = () => (
+  <PublicLayout>
+    <HomeScreen />
+  </PublicLayout>
+);
+const DashboardWrapper = () => (
+  <ManageLayout>
+    <DashboardScreen />
+  </ManageLayout>
+);
+const LoginWrapper = () => (
+  <PublicLayout>
+    <LoginScreen />
+  </PublicLayout>
+);
 
 export default function PublicStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="Login"
-        component={() => (
-          <PublicLayout>
-            <LoginScreen />
-          </PublicLayout>
-        )}
-      />
+      <Stack.Screen name="Login" component={LoginWrapper} />
       <Stack.Screen
         name="Home"
-        component={() => (
-          <PublicLayout>
-            <HomeScreen />
-          </PublicLayout>
-        )}
+        component={HomeScreenWrapper}
         options={{ headerTitle: "Trang chủ" }}
       />
       <Stack.Screen
         name="Dashboard"
         options={{ headerTitle: "Trang chủ" }}
-        component={() => (
-          <ManageLayout>
-            <DashboardScreen />
-          </ManageLayout>
-        )}
+        component={DashboardWrapper}
       />
     </Stack.Navigator>
   );
