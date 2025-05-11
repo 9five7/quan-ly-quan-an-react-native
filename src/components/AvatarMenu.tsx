@@ -9,6 +9,7 @@ import { PrivateStackParamList } from "src/navigation/PrivateStack";
 import { PublicStackParamList } from "src/navigation/PublicStack";
 import { useAccountQuery, useLogoutMutation } from "src/queries/useAccount";
 import tw from "src/utils/tw";
+import { getValidImageUrl } from "src/utils/utils";
 
 export default function AvatarMenu() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -56,7 +57,7 @@ export default function AvatarMenu() {
       <Pressable onPress={() => setModalVisible(true)}>
         <Avatar>
           {account.avatar ? (
-            <AvatarImage source={{ uri: account.avatar }} />
+            <AvatarImage source={{ uri: getValidImageUrl(account.avatar) }} />
           ) : (
             <AvatarFallback>
               {account.name?.slice(0, 2)?.toUpperCase() || "NA"}

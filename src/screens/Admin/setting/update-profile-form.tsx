@@ -13,6 +13,7 @@ import { Button } from "src/components/Button";
 import { useAccountQuery, useUpdateMeMutation } from "src/queries/useAccount";
 import { useUploadImageMutation } from "src/queries/useMedia";
 import tw from "src/utils/tw";
+import { getValidImageUrl } from "src/utils/utils";
 
 export default function UpdateProfileForm() {
   const [imageUri, setImageUri] = useState<string | null>(null);
@@ -80,7 +81,7 @@ export default function UpdateProfileForm() {
       <View style={tw`flex-row items-center gap-4`}>
         {imageUri || avatar ? (
           <Image
-            source={{ uri: imageUri || avatar }}
+            source={{ uri: getValidImageUrl(imageUri || avatar )}}
             style={tw`w-24 h-24 rounded-md`}
             resizeMode="cover"
           />

@@ -4,6 +4,10 @@ import { DishStatus } from "src/constants/type";
 export const normalizePath = (path: string) => {
     return path.startsWith('/') ? path.slice(1) : path
   }
+  const API_URL = 'http://192.168.0.100:4000'; // KHÔNG dùng localhost nếu test trên thiết bị thật
+
+export const getValidImageUrl = (url: string) =>
+  url.replace("localhost", "192.168.0.100");
   export const getAccessTokenFromStorage = async () => {
     try {
       const token = await AsyncStorage.getItem('accessToken');

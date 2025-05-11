@@ -42,7 +42,7 @@ export default function LoginForm() {
       },
       onError: (error: any) => {
         console.log("Login error:", error); // <- THÊM DÒNG NÀY
-        Alert.alert("Đăng nhập thất bại", error?.message || "Có lỗi xảy ra");
+        Alert.alert("Đăng nhập thất bại", error?.message || "Tài khoản khoặc mật khẩu không chính xác");
       },
     });
   };

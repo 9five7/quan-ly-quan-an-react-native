@@ -4,13 +4,13 @@ import dishesApiRequest from "src/apiRequests/dishes";
 
 import { DishListResType } from "src/schemaValidations/dish.schema";
 import tw from "src/utils/tw";
-import { formatCurrency } from "src/utils/utils";
+import { formatCurrency, getValidImageUrl } from "src/utils/utils";
 
 export default function HomeScreen() {
   const [dishList, setDishList] = useState<DishListResType['data']>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-
+  
   useEffect(() => {
     const fetchDishes = async () => {
       try {
@@ -35,6 +35,7 @@ export default function HomeScreen() {
       </View>
     );
   }
+
   return (
     <ScrollView contentContainerStyle={tw`pb-8`}>
       <View style={tw`relative h-48 w-full mb-6`}>
@@ -58,7 +59,7 @@ export default function HomeScreen() {
         {dishList.map((dish) => (
           <View key={dish.id} style={tw`flex-row gap-4`}>
             <Image
-              source={{ uri: dish.image }}
+              source={{ uri: getValidImageUrl(dish.image)}}
               style={tw`w-32 h-32 rounded-md`}
               resizeMode="cover"
             />

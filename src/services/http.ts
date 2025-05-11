@@ -61,7 +61,7 @@ const request = async <Response>(
     headers.Authorization = `Bearer ${accessToken}`;
   }
 
-  const baseUrl = options?.baseUrl ?? "https://api-bigboy.duthanhduoc.com";
+  const baseUrl = options?.baseUrl ?? "http://192.168.0.100:4000";
   const fullUrl = `${baseUrl}/${normalizePath(url)}`;
 
   const res = await fetch(fullUrl, {

@@ -23,7 +23,7 @@ import {
   UpdateDishBodyType,
 } from "src/schemaValidations/dish.schema";
 import tw from "src/utils/tw";
-import { getVietnameseDishStatus } from "src/utils/utils";
+import { getValidImageUrl, getVietnameseDishStatus } from "src/utils/utils";
 
 export default function EditDish({
   id,
@@ -146,7 +146,7 @@ export default function EditDish({
                 >
                   {imageUri ? (
                     <Image
-                      source={{ uri: imageUri }}
+                      source={{ uri:getValidImageUrl(imageUri) || imageUri }}
                       style={tw`w-full h-full`}
                     />
                   ) : (

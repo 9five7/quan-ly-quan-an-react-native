@@ -25,6 +25,7 @@ import { useUpdateEmployeeMutation } from "src/queries/useAccount";
 import tw from "src/utils/tw";
 import { AccountType } from "src/schemaValidations/account.schema";
 import { MaterialIcons } from "@expo/vector-icons";
+import { getValidImageUrl } from "src/utils/utils";
 
 export default function EditEmployeeForm({
   account,
@@ -124,7 +125,7 @@ export default function EditEmployeeForm({
                 <View style={tw`w-24 h-24 rounded-full bg-gray-200 overflow-hidden mb-2`}>
                   {imageUri || account.avatar ? (
                     <Image
-                      source={{ uri: imageUri || account.avatar || undefined }}
+                      source={{ uri:getValidImageUrl(imageUri || account.avatar || undefined )  }}
                       style={tw`w-full h-full`}
                     />
                   ) : (

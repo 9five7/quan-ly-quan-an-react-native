@@ -96,7 +96,7 @@ export default function AddDish({
       resetForm();
       onAddSuccess?.();
     } catch (error) {
-      Alert.alert("Lỗi", "Có lỗi xảy ra khi thêm món ăn");
+      Alert.alert("Lỗi", "Hãy điền đầy đủ dữ liệu khi thêm món ăn");
     } finally {
       setIsLoading(false);
     }

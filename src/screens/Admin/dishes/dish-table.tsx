@@ -17,7 +17,7 @@ import {
 import { useDeleteDishMutation, useDishListQuery } from "src/queries/useDish";
 import { DishListResType } from "src/schemaValidations/dish.schema";
 import tw from "src/utils/tw";
-import { getVietnameseDishStatus } from "src/utils/utils";
+import { getValidImageUrl, getVietnameseDishStatus } from "src/utils/utils";
 import AddDish from "./add-dish";
 import EditDish from "./edit-dish";
 type DishType = DishListResType["data"][0];
@@ -132,7 +132,7 @@ export default function DishTable() {
               <View style={tw`w-24 h-24 rounded-md overflow-hidden`}>
                 <Image
                   source={{
-                    uri: item.image || "https://via.placeholder.com/100",
+                    uri: getValidImageUrl(item.image) || item.image || "https://via.placeholder.com/100",
                   }}
                   style={tw`w-full h-full`}
                 />
