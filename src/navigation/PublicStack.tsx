@@ -39,7 +39,7 @@ export default function PublicStack() {
       />
       <Stack.Screen
         name="Dashboard"
-        options={{ headerTitle: "Trang chủ" }}
+        options={{ headerTitle: "quản lý" }}
         component={DashboardWrapper}
       />
     </Stack.Navigator>

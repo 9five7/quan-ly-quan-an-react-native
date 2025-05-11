@@ -4,6 +4,7 @@ import ManageLayout from "src/layouts/ManageLayout";
 import PublicLayout from "src/layouts/PublicLayout";
 import AccountsScreen from "src/screens/Admin/accounts/AccountsScreen";
 import DashboardScreen from "src/screens/Admin/DashboardScreen";
+import DishesScreen from "src/screens/Admin/dishes/DishesScreen";
 import SettingScreen from "src/screens/Admin/setting/Settings";
 import HomeScreen from "src/screens/Home";
 
@@ -13,6 +14,8 @@ export type PrivateStackParamList = {
   Setting: undefined;
   Home: undefined;
   Accounts: undefined;
+  Dishes: undefined;
+  Analytics: undefined;
 };
 
 const Stack = createNativeStackNavigator<PrivateStackParamList>();
@@ -25,6 +28,11 @@ const HomeScreenWrapper = () => (
 const DashboardScreenWrapper = () => (
   <ManageLayout>
     <DashboardScreen />
+  </ManageLayout>
+);
+const DishesScreenWrapper = () => (
+  <ManageLayout>
+    <DishesScreen />
   </ManageLayout>
 );
 
@@ -67,6 +75,11 @@ export default function PrivateStack() {
         name="Orders"
         options={{ headerTitle: "Đơn hàng" }}
          component={OrdersScreenWrapper}
+      />
+      <Stack.Screen
+        name="Dishes"
+        options={{ headerTitle: "Món ăn" }}
+         component={DishesScreenWrapper}
       />
       <Stack.Screen
         name="Accounts"
