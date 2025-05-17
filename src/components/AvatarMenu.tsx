@@ -15,7 +15,7 @@ export default function AvatarMenu() {
   const [modalVisible, setModalVisible] = useState(false);
   const { logout, isAuth } = useAuth();
   const logoutMutation = useLogoutMutation();
-  const { data } = useAccountQuery();
+  const { data,refetch } = useAccountQuery();
   const account = data?.payload?.data;
   const navigationPublic =
     useNavigation<NativeStackNavigationProp<PublicStackParamList>>();
@@ -31,7 +31,8 @@ export default function AvatarMenu() {
       }
     };
     checkToken();
-  }, [isAuth]);
+    refetch();
+  }, [isAuth,refetch]);
 
   const handleLogout = async () => {
     try {

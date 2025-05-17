@@ -5,7 +5,9 @@ import PublicLayout from "src/layouts/PublicLayout";
 import AccountsScreen from "src/screens/Admin/accounts/AccountsScreen";
 import DashboardScreen from "src/screens/Admin/DashboardScreen";
 import DishesScreen from "src/screens/Admin/dishes/DishesScreen";
+import OrderScreen from "src/screens/Admin/orders/Order";
 import SettingScreen from "src/screens/Admin/setting/Settings";
+import TablesScreen from "src/screens/Admin/tables/TablesScreen";
 import HomeScreen from "src/screens/Home";
 
 export type PrivateStackParamList = {
@@ -14,6 +16,7 @@ export type PrivateStackParamList = {
   Setting: undefined;
   Home: undefined;
   Accounts: undefined;
+  Tables: undefined;
   Dishes: undefined;
   Analytics: undefined;
 };
@@ -44,10 +47,14 @@ const SettingScreenWrapper = () => (
 
 const OrdersScreenWrapper = () => (
   <ManageLayout>
-    <HomeScreen />
+    <OrderScreen />
   </ManageLayout>
 );
-
+const TablesScreenWrapper = () => (
+  <ManageLayout>
+    <TablesScreen/>
+  </ManageLayout>
+);
 const AccountsScreenWrapper = () => (
   <ManageLayout>
     <AccountsScreen />
@@ -80,6 +87,12 @@ export default function PrivateStack() {
         name="Dishes"
         options={{ headerTitle: "Món ăn" }}
          component={DishesScreenWrapper}
+      />
+      <Stack.Screen
+        name="Tables"
+        options={{ headerTitle: "Bàn ăn" }}
+        
+         component={TablesScreenWrapper}
       />
       <Stack.Screen
         name="Accounts"

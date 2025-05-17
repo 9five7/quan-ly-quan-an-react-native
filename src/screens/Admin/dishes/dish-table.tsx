@@ -1,6 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { useQueryClient } from "@tanstack/react-query";
-import {} from "lucide-react";
 import { MoreHorizontal } from "lucide-react-native";
 import React, { createContext, useContext, useState } from "react";
 import {
@@ -20,7 +19,9 @@ import tw from "src/utils/tw";
 import { getValidImageUrl, getVietnameseDishStatus } from "src/utils/utils";
 import AddDish from "./add-dish";
 import EditDish from "./edit-dish";
+
 type DishType = DishListResType["data"][0];
+
 const DishTableContext = createContext<{
   setDishIdEdit: (value: number) => void;
   dishIdEdit: number | undefined;
@@ -56,7 +57,7 @@ export default function DishTable() {
   );
 
   const handleDelete = async (dish: DishType) => {
-    Alert.alert("Xác nhận", `Xóa món ${dish.name}?`, [
+    Alert.alert("Xác nhận", `Bạn có chắc muốn xóa món "${dish.name}"?`, [
       { text: "Hủy", style: "cancel" },
       {
         text: "Xóa",
@@ -64,6 +65,7 @@ export default function DishTable() {
           try {
             await deleteMutation.mutateAsync(dish.id);
             queryClient.invalidateQueries({ queryKey: ["dishes"] });
+            Alert.alert("Thành công", "Đã xóa món ăn thành công");
           } catch (error) {
             Alert.alert("Lỗi", "Không thể xóa món ăn");
           }
@@ -108,15 +110,20 @@ export default function DishTable() {
 
         {/* Table Header */}
         <View style={tw`flex-row bg-gray-100 p-2 border-b border-gray-200`}>
-          <View style={tw`w-24`}>
+          <View style={tw`flex-1`}>
             <Text style={tw`font-bold`}>Ảnh</Text>
           </View>
-          
-          <View style={tw`w-24`}>
+          <View style={tw`w-8`}>
+            <Text style={tw`font-bold`}></Text>
+          </View>
+          <View style={tw`flex-1`}>
             <Text style={tw`font-bold`}>Giá</Text>
           </View>
-          <View style={tw`w-20`}>
+          <View style={tw`flex-1`}>
             <Text style={tw`font-bold`}>Trạng thái</Text>
+          </View>
+          <View style={tw`w-8`}>
+            <Text style={tw`font-bold`}></Text>
           </View>
         </View>
 
@@ -126,7 +133,7 @@ export default function DishTable() {
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <View
-              style={tw`flex-row items-center w-30 h-30  border-b border-gray-100`}
+              style={tw`flex-row items-center py-2 border-b border-gray-100`}
             >
               {/* Image */}
               <View style={tw`w-24 h-24 rounded-md overflow-hidden`}>
@@ -139,20 +146,20 @@ export default function DishTable() {
               </View>
 
               {/* Name */}
-              {/* <View style={tw`flex-1 ml-2`}>
+              <View style={tw`flex-1 ml-2`}>
                 <Text style={tw`font-medium`}>{item.name}</Text>
                 <Text style={tw`text-sm text-gray-500`} numberOfLines={2}>
                   {item.description}
                 </Text>
-              </View> */}
+              </View>
 
               {/* Price */}
-              <View style={tw`w-24 ml-2`}>
+              <View style={tw`w-24`}>
                 <Text>{item.price.toLocaleString()}đ</Text>
               </View>
 
               {/* Status */}
-              <View style={tw`w-16`}>
+              <View style={tw`w-12`}>
                 <Text
                   style={tw`text-sm ${
                     item.status === "Available"
@@ -165,11 +172,10 @@ export default function DishTable() {
                   {getVietnameseDishStatus(item.status)}
                 </Text>
               </View>
+
               {/* Actions */}
-              <View style={tw`w-20`}>
-                <TouchableOpacity onPress={() => setDishIdEdit(item.id)}>
-                  <MaterialIcons name="more-vert" size={24} color="gray" />
-                </TouchableOpacity>
+              <View style={tw`w-20 items-center`}>
+                <ActionMenu dish={item} onDelete={() => handleDelete(item)} />
               </View>
             </View>
           )}
@@ -181,32 +187,29 @@ export default function DishTable() {
         />
 
         {/* Pagination */}
-
         <View style={tw`flex-row justify-between items-center mt-4`}>
           <Text style={tw`text-sm text-gray-500`}>
-            Hiển thị {paginatedDishes.length} trong {filteredDishes.length} kết
-            quả
+            Hiển thị {paginatedDishes.length} trong {filteredDishes.length} kết quả
           </Text>
-          {Array.from({
-            length: Math.ceil(filteredDishes.length / PAGE_SIZE),
-          }).map((_, i) => (
-            <Pressable
-              key={i}
-              onPress={() => setPage(i + 1)}
-              style={tw`
-                px-3 py-1 rounded border
-                ${page === i + 1 ? "bg-blue-500 border-blue-500" : "border-gray-300"}
-              `}
-            >
-              <Text
-                style={tw`
-                  ${page === i + 1 ? "text-white font-semibold" : "text-gray-700"}
-                `}
+          <View style={tw`flex-row gap-2`}>
+            {Array.from({
+              length: Math.ceil(filteredDishes.length / PAGE_SIZE),
+            }).map((_, i) => (
+              <Pressable
+                key={i}
+                onPress={() => setPage(i + 1)}
+                style={tw`w-8 h-8 items-center justify-center rounded ${
+                  page === i + 1 ? "bg-blue-500" : "bg-gray-200"
+                }`}
               >
-                {i + 1}
-              </Text>
-            </Pressable>
-          ))}
+                <Text
+                  style={tw`${page === i + 1 ? "text-white" : "text-gray-700"}`}
+                >
+                  {i + 1}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         </View>
       </View>
     </DishTableContext.Provider>
@@ -214,28 +217,40 @@ export default function DishTable() {
 }
 
 // Action Menu Component
-const ActionMenu = ({ dish }: { dish: DishType }) => {
-  const { setDishIdEdit, setDishDelete } = useContext(DishTableContext);
+const ActionMenu = ({ dish, onDelete }: { dish: DishType; onDelete: () => void }) => {
+  const { setDishIdEdit } = useContext(DishTableContext);
+  const [showMenu, setShowMenu] = useState(false);
 
   return (
     <View style={tw`relative`}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => setShowMenu(!showMenu)}>
         <MoreHorizontal size={20} color="gray" />
       </TouchableOpacity>
 
-      <View
-        style={tw`absolute right-0 top-6 bg-white shadow-md rounded w-32 z-10`}
-      >
-        <TouchableOpacity
-          style={tw`p-2 border-b border-gray-100`}
-          onPress={() => setDishIdEdit(dish.id)}
+      {showMenu && (
+        <View
+          style={tw`absolute right-0 top-6 bg-white shadow-md rounded w-32 z-10 border border-gray-200`}
         >
-          <Text>Sửa</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={tw`p-2`} onPress={() => setDishDelete(dish)}>
-          <Text style={tw`text-red-500`}>Xóa</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            style={tw`p-3 border-b border-gray-100`}
+            onPress={() => {
+              setDishIdEdit(dish.id);
+              setShowMenu(false);
+            }}
+          >
+            <Text>Sửa</Text>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={tw`p-3`} 
+            onPress={() => {
+              onDelete();
+              setShowMenu(false);
+            }}
+          >
+            <Text style={tw`text-red-500`}>Xóa</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

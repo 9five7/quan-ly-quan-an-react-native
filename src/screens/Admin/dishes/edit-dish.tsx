@@ -100,7 +100,7 @@ export default function EditDish({
     try {
       let body = { id: id as number, ...values };
 
-      if (imageUri) {
+      if (imageUri && imageUri !== data?.payload.data.image) {
         const formData = new FormData();
         formData.append("file", {
           uri: imageUri,
@@ -109,7 +109,10 @@ export default function EditDish({
         } as any);
         const uploadResult = await uploadImageMutation.mutateAsync(formData);
         body = { ...body, image: uploadResult.payload.data };
-      }
+      } else {
+      // Giữ nguyên ảnh cũ nếu không chọn ảnh mới
+      body = { ...body, image: data?.payload.data.image };
+    }
 
       const result = await updateDishMutation.mutateAsync(body);
       Alert.alert("Thành công", result.payload.message);
@@ -165,7 +168,7 @@ export default function EditDish({
             </View>
 
             {/* Form Fields */}
-            <View style={tw`space-y-4`}>
+            <View >
               {/* Name Field */}
               <View>
                 <Text style={tw`text-sm font-medium mb-1`}>Tên món ăn</Text>

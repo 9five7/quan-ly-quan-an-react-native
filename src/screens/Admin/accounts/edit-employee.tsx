@@ -144,7 +144,7 @@ export default function EditEmployeeForm({
             </View>
 
             {/* Form Fields */}
-            <View style={tw`space-y-4`}>
+            <View >
               {/* Name Field */}
               <View>
                 <Text style={tw`text-sm font-medium mb-1`}>Tên</Text>

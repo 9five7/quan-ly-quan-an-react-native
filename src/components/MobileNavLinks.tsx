@@ -50,7 +50,7 @@ export default function MobileNavLinks() {
                 style={tw`flex-row items-center mb-4`}
                 onPress={() => navigation.navigate(Item.href as never)}
               >
-                <Item.Icon size={24} color="#6B7280" />
+                <Item.Icon  size={24} color="#6B7280" />
                 <Text style={tw`ml-2 text-base text-gray-700`}>
                   {Item.title}
                 </Text>

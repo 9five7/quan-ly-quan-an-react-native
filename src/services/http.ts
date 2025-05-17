@@ -1,5 +1,6 @@
 // src/services/http.ts
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { URL } from "src/constants/config";
 import { LoginResType } from "src/schemaValidations/auth.schema";
 import { normalizePath } from "src/utils/utils";
 
@@ -61,7 +62,7 @@ const request = async <Response>(
     headers.Authorization = `Bearer ${accessToken}`;
   }
 
-  const baseUrl = options?.baseUrl ?? "http://192.168.0.100:4000";
+  const baseUrl = options?.baseUrl ?? URL;
   const fullUrl = `${baseUrl}/${normalizePath(url)}`;
 
   const res = await fetch(fullUrl, {

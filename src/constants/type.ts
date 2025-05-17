@@ -36,6 +36,7 @@ export const OrderStatus = {
   Delivered: 'Delivered',
   Paid: 'Paid'
 } as const
+export type OrderStatus = typeof OrderStatus[keyof typeof OrderStatus];
 
 export const OrderStatusValues = [
   OrderStatus.Pending,
