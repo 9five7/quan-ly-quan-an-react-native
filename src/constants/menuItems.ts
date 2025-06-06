@@ -1,51 +1,4 @@
-// import {
-//   Home,
-//   LineChart,
-//   Salad,
-//   ShoppingCart,
-//   Table,
-//   Users2,
-// } from "lucide-react-native";
-// import { Role } from "src/constants/type";
 
-// export const sharedMenuItems = [
-//   {
-//     title: "Home",
-//     Icon: Home,
-//     href: "Home",
-//   },
-//   {
-//     title: "Đơn hàng",
-//     Icon: ShoppingCart,
-//     href: "Orders",
-//     role: [Role.Owner, Role.Employee],
-//   },
-//   {
-//     title: "Bàn ăn",
-//     Icon: Table,
-//     href: "tables",
-//     role: [Role.Owner, Role.Employee],
-//   },
-//   {
-//     title: "Món ăn",
-//     Icon: Salad,
-//     href: "Dishes",
-//     role: [Role.Owner, Role.Employee],
-//   },
-
-//   {
-//     title: "Phân tích",
-//     Icon: LineChart,
-//     href: "Analytics",
-//     role: [Role.Owner, Role.Employee],
-//   },
-//   {
-//     title: "Nhân viên",
-//     Icon: Users2,
-//     href: "Accounts",
-//     role: [Role.Owner],
-//   },
-// ];
 import {
   Home,
   LayoutDashboard,
@@ -68,7 +21,7 @@ export const sharedMenuItems = [
 
   {
     title: "Quản lý",
-    Icon: LayoutDashboard,
+    Icon: LineChart,
     href: "Dashboard",
     authRequired: true,
   },
@@ -90,12 +43,7 @@ export const sharedMenuItems = [
     href: "Dishes",
     authRequired: true,
   },
-  {
-    title: "Phân tích",
-    Icon: LineChart,
-    href: "Analytics",
-    authRequired: true,
-  },
+  
   {
     title: "Nhân viên",
     Icon: Users2,

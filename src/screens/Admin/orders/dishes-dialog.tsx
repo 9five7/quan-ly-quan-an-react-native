@@ -12,9 +12,13 @@ import {
 import { useDishListQuery } from "src/queries/useDish";
 import { DishListResType } from "src/schemaValidations/dish.schema";
 import tw from "src/utils/tw";
-import { formatCurrency, getVietnameseDishStatus } from "src/utils/utils";
+import {
+  formatCurrency,
+  getValidImageUrl,
+  getVietnameseDishStatus,
+} from "src/utils/utils";
 
-type DishItem = DishListResType['data'][0]
+type DishItem = DishListResType["data"][0];
 
 const PAGE_SIZE = 10;
 
@@ -218,7 +222,9 @@ export function DishesDialog({
                       onPress={() => chooseDish(item)}
                     >
                       <Image
-                        source={{ uri: item.image }}
+                        source={{
+                          uri: getValidImageUrl(item.image) || item.image,
+                        }}
                         style={tw`w-12 h-12 rounded-md mr-3`}
                         resizeMode="cover"
                       />

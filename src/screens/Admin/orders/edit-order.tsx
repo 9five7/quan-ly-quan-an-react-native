@@ -15,7 +15,7 @@ import {
   UpdateOrderBodyType,
 } from "src/schemaValidations/order.schema";
 import tw from "src/utils/tw";
-import { getVietnameseOrderStatus } from "src/utils/utils";
+import { getValidImageUrl, getVietnameseOrderStatus } from "src/utils/utils";
 
 import { Picker } from "@react-native-picker/picker";
 import { Image } from "react-native";
@@ -86,21 +86,19 @@ export default function EditOrder({
   }, [data, reset]);
   const onSubmit = async (values: UpdateOrderBodyType) => {
     if (updateOrderMutation.isPending) return;
-    
+
     try {
-      const body: UpdateOrderBodyType & { orderId: number } = { 
-        orderId: id as number, 
-        ...values 
+      const body: UpdateOrderBodyType & { orderId: number } = {
+        orderId: id as number,
+        ...values,
       };
-      
+
       const result = await updateOrderMutation.mutateAsync(body);
-      
-    
-      
+
       onSubmitSuccess && onSubmitSuccess();
       closeModal();
     } catch (error) {
-      error
+      error;
     }
   };
 
@@ -131,7 +129,12 @@ export default function EditOrder({
                   <Text style={tw`mb-2`}>Món ăn</Text>
                   <View style={tw`flex-row items-center gap-4`}>
                     <Image
-                      source={{ uri: selectedDish?.image }}
+                      source={{
+                        uri:
+                          getValidImageUrl(selectedDish?.image) ||
+                          selectedDish?.image ||
+                          "https://via.placeholder.com/64x64",
+                      }}
                       style={tw`w-16 h-16 rounded-md`}
                       resizeMode="cover"
                     />

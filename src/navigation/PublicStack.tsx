@@ -1,7 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ManageLayout from "src/layouts/ManageLayout";
 import PublicLayout from "src/layouts/PublicLayout";
-import DashboardScreen from "src/screens/Admin/DashboardScreen";
+import DashboardScreen from "src/screens/Admin/dashboard/DashboardScreen";
+
+
 import HomeScreen from "src/screens/Home";
 import LoginScreen from "src/screens/Login/LoginScreen";
 

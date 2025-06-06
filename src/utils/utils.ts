@@ -6,8 +6,16 @@ import { DishStatus, OrderStatus, TableStatus } from "src/constants/type";
 export const normalizePath = (path: string) => {
     return path.startsWith('/') ? path.slice(1) : path
   }
-
-
+export const simpleMatchText = (fullText: string, matchText: string) => {
+  return removeAccents(fullText.toLowerCase()).includes(removeAccents(matchText.trim().toLowerCase()))
+} // kiểm tra matchText có khớp với fullText hay không
+export function removeAccents(str: string) {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+} // chuyển tiếng việt ko dấu
 export const getValidImageUrl = (url: string) =>
   url.replace("localhost", host);
   export const getAccessTokenFromStorage = async () => {

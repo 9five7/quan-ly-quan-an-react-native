@@ -99,6 +99,7 @@ export const orderTableColumns = [
               key={status} 
               label={getVietnameseOrderStatus(status)} 
               value={status} 
+              
             />
           ))}
         </Picker>

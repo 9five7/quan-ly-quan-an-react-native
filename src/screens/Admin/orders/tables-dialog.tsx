@@ -8,14 +8,12 @@ import {
   View,
 } from "react-native";
 import { TableStatus } from "src/constants/type";
+import { useTableListQuery } from "src/queries/useTable";
+import { TableListResType } from "src/schemaValidations/table.schema";
 import tw from "src/utils/tw";
 import { getVietnameseTableStatus } from "src/utils/utils";
 
-type TableItem = {
-  number: number;
-  capacity: number;
-  status: string;
-};
+type TableItem = TableListResType["data"][0];
 
 const PAGE_SIZE = 10;
 
@@ -27,11 +25,8 @@ export function TablesDialog({
   const [visible, setVisible] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [page, setPage] = useState(1);
-
-  // TODO: Replace with actual data fetching
-  const data: TableItem[] = [];
-
-  // Filter tables based on search text
+  const tableListQuery = useTableListQuery();
+  const data = tableListQuery.data?.payload.data || [];
   const filteredTables = data.filter((table) =>
     table.number.toString().includes(searchText)
   );

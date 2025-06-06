@@ -3,8 +3,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ManageLayout from "src/layouts/ManageLayout";
 import PublicLayout from "src/layouts/PublicLayout";
 import AccountsScreen from "src/screens/Admin/accounts/AccountsScreen";
-import DashboardScreen from "src/screens/Admin/DashboardScreen";
+import DashboardScreen from "src/screens/Admin/dashboard/DashboardScreen";
+
 import DishesScreen from "src/screens/Admin/dishes/DishesScreen";
+
 import OrderScreen from "src/screens/Admin/orders/Order";
 import SettingScreen from "src/screens/Admin/setting/Settings";
 import TablesScreen from "src/screens/Admin/tables/TablesScreen";

@@ -1,52 +1,59 @@
-import React from 'react';
-import { View, TextInput, TouchableOpacity, Text } from 'react-native';
-import { Minus, Plus } from 'lucide-react-native';
-import tw from 'src/utils/tw';
+// src/components/Quantity.tsx
+import { Minus, Plus } from "lucide-react-native";
+import React, { useEffect, useState } from "react";
+import { TextInput, TouchableOpacity, View } from "react-native";
+import tw from "src/utils/tw";
 
-type QuantityProps = {
-  onChange: (value: number) => void;
+export default function Quantity({
+  value,
+  onChange,
+}: {
   value: number;
-  disabled?: boolean;
-};
+  onChange: (value: number) => void;
+}) {
+  const [internalValue, setInternalValue] = useState(value.toString());
 
-export default function Quantity({ onChange, value, disabled = false }: QuantityProps) {
-  const handleTextChange = (text: string) => {
-    const numberValue = Number(text);
-    if (!isNaN(numberValue)) {
-      onChange(numberValue);
+  useEffect(() => {
+    setInternalValue(value.toString());
+  }, [value]);
+
+  const handleInputChange = (text: string) => {
+    if (/^\d*$/.test(text)) {
+      setInternalValue(text);
+      const number = parseInt(text || "0", 10);
+      onChange(number);
     }
   };
 
-  const opacityStyle = disabled ? 'opacity-50' : 'opacity-100';
-  const bgColor = disabled ? 'bg-gray-200' : 'bg-white';
+  const decrease = () => {
+    const newValue = Math.max(0, value - 1);
+    onChange(newValue);
+  };
+
+  const increase = () => {
+    onChange(value + 1);
+  };
 
   return (
-    <View style={tw`flex-row items-center gap-1 ${opacityStyle}`}>
-      {/* Nút giảm */}
+    <View style={tw`flex-row items-center gap-2`}>
       <TouchableOpacity
-        style={tw`h-6 w-6 items-center justify-center rounded border border-gray-300 ${bgColor}`}
-        disabled={disabled || value === 0}
-        onPress={() => onChange(value - 1)}
+        onPress={decrease}
+        disabled={value === 0}
+        style={tw`px-2 py-1 bg-gray-200 rounded`}
       >
-        <Minus size={12} color={disabled || value === 0 ? '#9CA3AF' : '#000'} />
+        <Minus size={16} color={value === 0 ? "#9ca3af" : "#000"} />
       </TouchableOpacity>
-
-      {/* Ô nhập số */}
       <TextInput
-        style={tw`h-6 w-8 border border-gray-300 text-center ${bgColor}`}
         keyboardType="numeric"
-        value={value.toString()}
-        onChangeText={handleTextChange}
-        editable={!disabled}
+        value={internalValue}
+        onChangeText={handleInputChange}
+        style={tw`border border-gray-300 rounded px-2 py-1 w-12 text-center`}
       />
-
-      {/* Nút tăng */}
       <TouchableOpacity
-        style={tw`h-6 w-6 items-center justify-center rounded border border-gray-300 ${bgColor}`}
-        onPress={() => onChange(value + 1)}
-        disabled={disabled}
+        onPress={increase}
+        style={tw`px-2 py-1 bg-gray-200 rounded`}
       >
-        <Plus size={12} color={disabled ? '#9CA3AF' : '#000'} />
+        <Plus size={16} color={value === 0 ? "#9CA3AF" : "#000"} />
       </TouchableOpacity>
     </View>
   );
